@@ -1,4 +1,4 @@
-module github.com/zhanghuichina/rs232_4_rlays
+module github.com/zhanghuichina/rs232_4_relays
 
 go 1.18
 

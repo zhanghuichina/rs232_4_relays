@@ -3,7 +3,7 @@ package main
 import (
 	"time"
 
-	driver "github.com/zhanghuichina/rs232_4_rlays/src/driverSwitch"
+	driver "github.com/zhanghuichina/rs232_4_relays/src/driverSwitch"
 )
 
 var (
