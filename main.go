@@ -15,7 +15,7 @@ var (
 
 func main() {
 	// init port
-	err := driver.DriverInit("COM3", 9600)
+	err := driver.DriverInit("/dev/ttyS1", 9600)
 	if err != nil {
 		panic(err)
 	}

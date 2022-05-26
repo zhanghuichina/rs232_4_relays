@@ -6,7 +6,7 @@ import (
 
 	"github.com/goburrow/serial"
 	logger "github.com/sirupsen/logrus"
-	"github.com/things-go/go-modbus"
+	"github.com/zhanghuichina/go-modbus"
 )
 
 var (
@@ -18,6 +18,7 @@ var (
 
 func DriverInit(device string, boud int) error {
 	p := modbus.NewRTUClientProvider(
+		//modbus.WithEnableLogger(),
 		modbus.WithSerialConfig(
 			serial.Config{
 				Address:  device,
@@ -31,7 +32,6 @@ func DriverInit(device string, boud int) error {
 	client = modbus.NewClient(p)
 
 	err := client.Connect()
-	defer client.Close()
 	if err != nil {
 		logger.WithField(tag, "DriverInit").Errorf(
 			"connect serial failed, error:%v",
@@ -55,12 +55,12 @@ func DriverSetAddr(addr uint8) error {
 		}
 
 		logger.WithField(tag, "DriverSetAddr").Errorf(
-			"WriteMultipleRegisters faile, error:%v",
+			"WriteMultipleRegisters failed, error:%v",
 			err.Error(),
 		)
 	}
 
-	return nil
+	return err
 }
 
 func DriverSetState(addr uint8, port uint8, state bool) error {
@@ -70,7 +70,9 @@ func DriverSetState(addr uint8, port uint8, state bool) error {
 	err := client.WriteSingleCoil(addr, uint16(port), state)
 	if err != nil {
 		logger.WithField(tag, "DriverSetState").Errorf(
-			"WriteSingleCoil faile, error:%v",
+			"WriteSingleCoil port:%d state:%d failed, error:%v",
+			port,
+			state,
 			err.Error(),
 		)
 	}
