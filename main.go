@@ -3,19 +3,24 @@ package main
 import (
 	"time"
 
+	"github.com/spf13/pflag"
 	driver "github.com/zhanghuichina/rs232_4_relays/src/driverSwitch"
 )
 
 var (
-	addr        uint8 = 1 // modbus地址 默认255 初始化后调整为该值
-	redLight    uint8 = 0 // 红灯继电器地址
-	greenLight  uint8 = 1 // 蓝灯继电器地址
-	yellowLight uint8 = 2 // 黄灯继电器地址
+	path        string = "/dev/ttyS1"
+	addr        uint8  = 1 // modbus地址 默认255 初始化后调整为该值
+	redLight    uint8  = 0 // 红灯继电器地址
+	greenLight  uint8  = 1 // 蓝灯继电器地址
+	yellowLight uint8  = 2 // 黄灯继电器地址
 )
 
 func main() {
+	pflag.StringVar(&path, "com", "/dev/ttyS0", "com path")
+	pflag.Parse()
+
 	// init port
-	err := driver.DriverInit("/dev/ttyS1", 9600)
+	err := driver.DriverInit(path, 9600)
 	if err != nil {
 		panic(err)
 	}
