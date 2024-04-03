@@ -77,5 +77,5 @@ func DriverSetState(addr uint8, port uint8, state bool) error {
 		)
 	}
 
-	return nil
+	return err
 }
